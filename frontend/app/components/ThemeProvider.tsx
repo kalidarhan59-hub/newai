@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
+const STORAGE_KEY = "manus-theme";
 
 const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({
   theme: "dark",
@@ -12,30 +13,37 @@ const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
 
+  // Hydrate from localStorage / system preference once on mount.
   useEffect(() => {
-    const saved = (typeof window !== "undefined"
-      ? (window.localStorage.getItem("manus-theme") as Theme | null)
-      : null) ?? null;
-    const initial: Theme =
-      saved ??
-      (typeof window !== "undefined" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light");
-    setTheme(initial);
+    if (typeof window === "undefined") return;
+    const saved = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
+    if (saved === "light" || saved === "dark") {
+      setTheme(saved);
+      return;
+    }
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setTheme(prefersDark ? "dark" : "light");
   }, []);
 
+  // Apply the class to <html> whenever theme changes. The localStorage write
+  // happens in `toggle()` instead of here, otherwise the first commit (with
+  // the default "dark" before hydration finishes) would clobber any saved
+  // "light" preference.
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") root.classList.add("dark");
     else root.classList.remove("dark");
-    window.localStorage.setItem("manus-theme", theme);
   }, [theme]);
 
-  const toggle = useCallback(
-    () => setTheme((t) => (t === "dark" ? "light" : "dark")),
-    [],
-  );
+  const toggle = useCallback(() => {
+    setTheme((t) => {
+      const next: Theme = t === "dark" ? "light" : "dark";
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(STORAGE_KEY, next);
+      }
+      return next;
+    });
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggle }}>{children}</ThemeContext.Provider>
