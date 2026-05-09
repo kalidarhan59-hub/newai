@@ -8,10 +8,10 @@ from .base import AgentResult, AgentTask, BaseAgent
 
 class QAAgent(BaseAgent):
     name = "qa"
-    role = "QA lead"
+    role = "Руководитель QA"
     description = (
-        "Designs test plans, enumerates edge cases, and produces regression "
-        "checklists. Skeptical by default — prefers reproducible failures."
+        "Проектирует тест-планы, перечисляет краевые случаи и собирает регрессионные "
+        "чек-листы. Скептичен по умолчанию — предпочитает воспроизводимые падения."
     )
     capabilities = ["test-plans", "edge-cases", "regression-checklists"]
     task_kind = TaskKind.REASONING

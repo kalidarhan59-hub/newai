@@ -39,21 +39,27 @@ class TaskPlanner:
             return [
                 PlanStep(
                     1,
-                    "Read relevant files and analyse the codebase.",
+                    "Прочитать релевантные файлы и проанализировать кодовую базу.",
                     TaskKind.CODING,
                     agent="developer",
                 ),
                 PlanStep(
                     2,
-                    "Propose a minimal patch.",
+                    "Предложить минимальный патч.",
                     TaskKind.CODING,
                     agent="developer",
                     depends_on=[1],
                 ),
-                PlanStep(3, "Add or update tests.", TaskKind.CODING, agent="qa", depends_on=[2]),
+                PlanStep(
+                    3,
+                    "Добавить или обновить тесты.",
+                    TaskKind.CODING,
+                    agent="qa",
+                    depends_on=[2],
+                ),
                 PlanStep(
                     4,
-                    "Summarise the diff for the user.",
+                    "Кратко описать диф для пользователя.",
                     TaskKind.GENERAL,
                     depends_on=[3],
                 ),
@@ -62,21 +68,21 @@ class TaskPlanner:
             return [
                 PlanStep(
                     1,
-                    "Run web research on the topic.",
+                    "Провести веб-исследование по теме.",
                     TaskKind.RESEARCH,
                     agent="researcher",
                     tool="web_search",
                 ),
                 PlanStep(
                     2,
-                    "Cross-check at least two sources.",
+                    "Сверить минимум два независимых источника.",
                     TaskKind.RESEARCH,
                     agent="researcher",
                     depends_on=[1],
                 ),
                 PlanStep(
                     3,
-                    "Synthesise findings into a brief.",
+                    "Свести находки в краткий бриф.",
                     TaskKind.GENERAL,
                     agent="researcher",
                     depends_on=[2],
@@ -86,20 +92,20 @@ class TaskPlanner:
             return [
                 PlanStep(
                     1,
-                    "Clarify the user persona and primary task.",
+                    "Уточнить целевого пользователя и ключевую задачу.",
                     TaskKind.CREATIVE,
                     agent="designer",
                 ),
                 PlanStep(
                     2,
-                    "Sketch information architecture.",
+                    "Набросать информационную архитектуру.",
                     TaskKind.CREATIVE,
                     agent="designer",
                     depends_on=[1],
                 ),
                 PlanStep(
                     3,
-                    "Produce a Tailwind-friendly visual spec.",
+                    "Подготовить визуальную спецификацию под Tailwind.",
                     TaskKind.CREATIVE,
                     agent="designer",
                     depends_on=[2],
@@ -109,27 +115,27 @@ class TaskPlanner:
             return [
                 PlanStep(
                     1,
-                    "Frame problem and market.",
+                    "Сформулировать проблему и рынок.",
                     TaskKind.RESEARCH,
                     agent="business_analyst",
                 ),
                 PlanStep(
                     2,
-                    "Outline value proposition and competition.",
+                    "Прописать ценностное предложение и конкурентов.",
                     TaskKind.REASONING,
                     agent="business_analyst",
                     depends_on=[1],
                 ),
                 PlanStep(
                     3,
-                    "Draft pitch deck outline.",
+                    "Набросать структуру pitch deck.",
                     TaskKind.CREATIVE,
                     agent="presentation",
                     depends_on=[2],
                 ),
                 PlanStep(
                     4,
-                    "QA pass for narrative consistency.",
+                    "QA-проход на согласованность нарратива.",
                     TaskKind.REASONING,
                     agent="qa",
                     depends_on=[3],
@@ -138,20 +144,20 @@ class TaskPlanner:
         return [
             PlanStep(
                 1,
-                "Understand the request and key constraints.",
+                "Понять запрос и ключевые ограничения.",
                 TaskKind.REASONING,
                 agent="pm",
             ),
             PlanStep(
                 2,
-                "Execute the most likely interpretation.",
+                "Выполнить наиболее вероятную интерпретацию.",
                 TaskKind.GENERAL,
                 agent="developer",
                 depends_on=[1],
             ),
             PlanStep(
                 3,
-                "Self-check and produce a final answer.",
+                "Сделать self-check и собрать финальный ответ.",
                 TaskKind.REASONING,
                 agent="qa",
                 depends_on=[2],
@@ -171,12 +177,28 @@ class TaskPlanner:
 
 def _classify(text: str) -> str:
     t = text.lower()
-    if any(k in t for k in ("code", "bug", "stack trace", "function", "class ", "typescript", "python")):
+    code_kw = (
+        "code", "bug", "stack trace", "function", "class ", "typescript", "python",
+        "код", "баг", "ошибк", "функци", "класс", "тайпскрипт", "питон", "патч",
+    )
+    research_kw = (
+        "research", "find", "compare", "competitor", "paper", "article", "search",
+        "исследов", "найди", "найти", "сравни", "конкурент", "статья", "источник", "поиск",
+    )
+    design_kw = (
+        "design", " ui", " ux", "figma", "layout", "component",
+        "дизайн", "интерфейс", "макет", "компонент",
+    )
+    business_kw = (
+        "startup", "market", "business", "investor", "pitch", "revenue", "saas",
+        "стартап", "рынок", "бизнес", "инвестор", "питч", "выручк",
+    )
+    if any(k in t for k in code_kw):
         return "code"
-    if any(k in t for k in ("research", "find", "compare", "competitor", "paper", "article", "search")):
+    if any(k in t for k in research_kw):
         return "research"
-    if any(k in t for k in ("design", " ui", " ux", "figma", "layout", "component")):
+    if any(k in t for k in design_kw):
         return "design"
-    if any(k in t for k in ("startup", "market", "business", "investor", "pitch", "revenue", "saas")):
+    if any(k in t for k in business_kw):
         return "business"
     return "general"

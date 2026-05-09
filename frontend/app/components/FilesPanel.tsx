@@ -70,10 +70,10 @@ export function FilesPanel() {
               <Upload size={28} className="text-accent" />
             )}
             <div className="text-sm font-medium">
-              Drop files here or click to upload
+              Перетащите файлы сюда или нажмите для выбора
             </div>
             <div className="text-xs text-fg-subtle">
-              PDF · DOCX · XLSX · CSV · JSON · TXT · ZIP · code
+              PDF · DOCX · XLSX · CSV · JSON · TXT · ZIP · код
             </div>
           </div>
         </label>
@@ -86,7 +86,7 @@ export function FilesPanel() {
 
         <div className="mt-6">
           <div className="text-xs uppercase tracking-wider text-fg-subtle mb-2">
-            workspace ({files.length})
+            рабочее пространство ({files.length})
           </div>
           <ul className="space-y-1">
             {files.map((f) => (
@@ -110,20 +110,20 @@ export function FilesPanel() {
 
       <aside className="border-l border-border overflow-y-auto p-5">
         <div className="text-xs uppercase tracking-wider text-fg-subtle mb-2">
-          last upload
+          последняя загрузка
         </div>
         {last ? (
           <div className="text-sm space-y-3">
             <div className="font-medium">{last.name}</div>
             <div className="text-fg-muted">{last.summary}</div>
             <div className="text-xs text-fg-subtle">
-              chunks: {last.chunks.length} · type: {last.content_type}
+              чанков: {last.chunks.length} · тип: {last.content_type}
             </div>
           </div>
         ) : (
           <p className="text-sm text-fg-subtle">
-            Upload a file to see Manus Core parse it, summarise it, and add it
-            to the project memory.
+            Загрузите файл — Manus Core разоберёт его, сделает выжимку
+            и добавит в память проекта.
           </p>
         )}
       </aside>

@@ -50,7 +50,7 @@ def parse_bytes(data: bytes, name: str) -> ParsedDocument:
         return ParsedDocument(
             name=name,
             content_type=suffix or "application/octet-stream",
-            summary=f"Could not parse {name}: {e}",
+            summary=f"Не удалось разобрать {name}: {e}",
             chunks=[],
             metadata={"error": str(e)},
         )
@@ -132,7 +132,7 @@ def _parse_zip(data: bytes, name: str) -> ParsedDocument:
             doc = parse_bytes(inner, info.filename)
             summaries.append(f"- {info.filename}: {doc.summary}")
             chunks.extend(f"# {info.filename}\n{c}" for c in doc.chunks[:3])
-    summary = "ZIP archive contents:\n" + "\n".join(summaries[:50])
+    summary = "Содержимое ZIP-архива:\n" + "\n".join(summaries[:50])
     return ParsedDocument(
         name=name,
         content_type="application/zip",

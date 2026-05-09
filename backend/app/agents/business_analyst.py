@@ -8,10 +8,10 @@ from .base import AgentResult, AgentTask, BaseAgent
 
 class BusinessAnalystAgent(BaseAgent):
     name = "business_analyst"
-    role = "Business analyst"
+    role = "Бизнес-аналитик"
     description = (
-        "Performs market sizing, competitor analysis, and go-to-market planning. "
-        "Quantifies assumptions and flags weak data."
+        "Считает размер рынка, анализирует конкурентов и строит план выхода на рынок. "
+        "Квантифицирует допущения и помечает слабые данные."
     )
     capabilities = ["market-sizing", "competitor-analysis", "gtm", "pricing"]
     task_kind = TaskKind.REASONING

@@ -8,10 +8,10 @@ from .base import AgentResult, AgentTask, BaseAgent
 
 class ResearcherAgent(BaseAgent):
     name = "researcher"
-    role = "Research lead"
+    role = "Руководитель исследований"
     description = (
-        "Performs structured research, cross-checks at least two independent "
-        "sources, and produces concise briefs with explicit citations."
+        "Проводит структурированный ресёрч, сверяет минимум два независимых "
+        "источника и выдаёт короткие брифы с явными ссылками."
     )
     capabilities = ["web-research", "source-verification", "summarisation"]
     task_kind = TaskKind.RESEARCH

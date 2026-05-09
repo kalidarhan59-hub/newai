@@ -31,8 +31,8 @@ DEFAULT_ALLOWED = {
 class TerminalTool(BaseTool):
     name = "terminal"
     description = (
-        "Run a shell command from a small whitelist of inspection binaries with "
-        "a 10s timeout. Not a general-purpose shell."
+        "Запустить команду shell из небольшого белого списка инструментов "
+        "инспекции с таймаутом 10 с. Не универсальный shell."
     )
     schema = {
         "type": "object",

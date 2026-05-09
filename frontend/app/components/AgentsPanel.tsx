@@ -41,7 +41,7 @@ export function AgentsPanel() {
     <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] h-full">
       <div className="border-r border-border overflow-y-auto">
         <div className="px-4 py-3 border-b border-border text-xs uppercase tracking-wider text-fg-subtle">
-          {agents.length} agents
+          агентов: {agents.length}
         </div>
         <ul>
           {agents.map((a) => (
@@ -75,7 +75,7 @@ export function AgentsPanel() {
             onRun={run}
           />
         ) : (
-          <div className="text-fg-subtle text-sm">Loading agents…</div>
+          <div className="text-fg-subtle text-sm">Загрузка агентов…</div>
         )}
       </div>
     </div>
@@ -119,12 +119,12 @@ function AgentDetail({
         </div>
       </div>
       <div className="border-t border-border pt-4">
-        <label className="text-xs uppercase tracking-wider text-fg-subtle">Run task</label>
+        <label className="text-xs uppercase tracking-wider text-fg-subtle">Задача</label>
         <textarea
           value={task}
           onChange={(e) => onTaskChange(e.target.value)}
           rows={4}
-          placeholder="Describe what you want this agent to do…"
+          placeholder="Опишите, что должен сделать этот агент…"
           className="mt-2 w-full bg-bg-elevated border border-border rounded-xl px-4 py-3 text-sm placeholder:text-fg-subtle focus:outline-none focus:border-accent/60"
         />
         <button
@@ -133,7 +133,7 @@ function AgentDetail({
           className="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-white text-sm disabled:opacity-50 hover:opacity-90"
         >
           {busy ? <Loader2 size={14} className="animate-spin" /> : <Play size={14} />}
-          run @{agent.name}
+          запустить @{agent.name}
         </button>
       </div>
       {error && (
@@ -144,7 +144,7 @@ function AgentDetail({
       {output && (
         <div className="border border-border bg-bg-elevated rounded-xl px-4 py-3 text-sm whitespace-pre-wrap">
           <div className="text-[11px] uppercase tracking-wider text-fg-subtle mb-1">
-            output{confidence != null && ` · conf ${(confidence * 100).toFixed(0)}%`}
+            результат{confidence != null && ` · доверие ${(confidence * 100).toFixed(0)}%`}
           </div>
           {output}
         </div>

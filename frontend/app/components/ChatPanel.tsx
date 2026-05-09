@@ -68,7 +68,7 @@ export function ChatPanel() {
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: `**Error:** ${e instanceof Error ? e.message : String(e)}`,
+          content: `**Ошибка:** ${e instanceof Error ? e.message : String(e)}`,
           created_at: new Date().toISOString(),
         },
       ]);
@@ -83,12 +83,12 @@ export function ChatPanel() {
         <div>
           <h2 className="text-base font-semibold flex items-center gap-2">
             <Sparkles size={16} className="text-accent" />
-            Manus Core chat
+            Чат Manus Core
           </h2>
           <p className="text-xs text-fg-subtle mt-0.5">
-            {sessionId ? `session ${sessionId.slice(0, 8)}…` : "new session"} ·
+            {sessionId ? `сессия ${sessionId.slice(0, 8)}…` : "новая сессия"} ·
             {" "}
-            multi-agent · long-term memory · mock provider until keys are set
+            мульти-агенты · долговременная память · mock-провайдер до подключения ключей
           </p>
         </div>
         <select
@@ -96,7 +96,7 @@ export function ChatPanel() {
           onChange={(e) => setAgentHint(e.target.value)}
           className="text-xs bg-bg-elevated border border-border rounded-lg px-2 py-1.5 text-fg-muted"
         >
-          <option value="">auto-route</option>
+          <option value="">авто-маршрутизация</option>
           {agents.map((a) => (
             <option key={a.name} value={a.name}>
               {a.name}
@@ -112,7 +112,7 @@ export function ChatPanel() {
         ))}
         {busy && (
           <div className="text-xs text-fg-subtle px-1 animate-pulse-slow">
-            orchestrator running plan…
+            оркестратор выполняет план…
           </div>
         )}
       </div>
@@ -128,7 +128,7 @@ export function ChatPanel() {
                 send();
               }
             }}
-            placeholder="Ask Manus Core to build, research, debug, or plan…"
+            placeholder="Попросите Manus Core построить, исследовать, отладить или спланировать…"
             rows={2}
             className="flex-1 resize-none bg-bg-elevated border border-border rounded-xl px-4 py-3 text-sm placeholder:text-fg-subtle focus:outline-none focus:border-accent/60"
           />
@@ -136,7 +136,7 @@ export function ChatPanel() {
             onClick={send}
             disabled={busy || !input.trim()}
             className="h-12 w-12 grid place-items-center rounded-xl bg-accent text-white disabled:opacity-50 hover:opacity-90 transition-opacity"
-            aria-label="send"
+            aria-label="отправить"
           >
             <Send size={18} />
           </button>
@@ -148,20 +148,19 @@ export function ChatPanel() {
 
 function EmptyState() {
   const samples = [
-    "Plan an MVP for a B2B SaaS analytics startup.",
-    "Find a bug in this Python stack trace and propose a patch.",
-    "Research the top 3 alternatives to Snowflake for a 50-person team.",
-    "Design a sidebar component for an AI workspace, dark mode first.",
+    "Спланируй MVP для B2B SaaS-стартапа по аналитике.",
+    "Найди баг в этом Python stack trace и предложи патч.",
+    "Исследуй топ-3 альтернативы Snowflake для команды в 50 человек.",
+    "Спроектируй сайдбар для AI-рабочего пространства, dark mode в первую очередь.",
   ];
   return (
     <div className="max-w-2xl mx-auto text-center py-16">
       <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-accent/10 mb-4">
         <Sparkles size={20} className="text-accent" />
       </div>
-      <h3 className="text-lg font-semibold">An AI team in one chat</h3>
+      <h3 className="text-lg font-semibold">AI-команда в одном чате</h3>
       <p className="text-sm text-fg-muted mt-2">
-        Manus Core plans, routes between models, runs specialised agents, and
-        keeps long-term memory of your projects.
+        Manus Core планирует, маршрутизирует между моделями, запускает специализированных агентов и хранит долговременную память проектов.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-6 text-left">
         {samples.map((s) => (
@@ -193,10 +192,10 @@ function Message({ message }: { message: UIMessage }) {
         }`}
       >
         <div className="text-[11px] uppercase tracking-wider text-fg-subtle mb-1 flex items-center gap-2">
-          <span>{isUser ? "You" : "Manus Core"}</span>
+          <span>{isUser ? "Вы" : "Manus Core"}</span>
           {message.provider && <span className="text-fg-subtle">· {message.provider}</span>}
           {message.confidence != null && (
-            <span className="text-fg-subtle">· conf {(message.confidence * 100).toFixed(0)}%</span>
+            <span className="text-fg-subtle">· доверие {(message.confidence * 100).toFixed(0)}%</span>
           )}
         </div>
         <div className="prose-mc">
@@ -205,7 +204,7 @@ function Message({ message }: { message: UIMessage }) {
         {message.plan && message.plan.length > 0 && (
           <details className="mt-3 group">
             <summary className="text-[11px] uppercase tracking-wider text-fg-subtle cursor-pointer hover:text-fg-muted">
-              plan ({message.plan.length} steps)
+              план ({message.plan.length} шагов)
             </summary>
             <ol className="mt-2 space-y-1 text-xs text-fg-muted">
               {message.plan.map((step) => (

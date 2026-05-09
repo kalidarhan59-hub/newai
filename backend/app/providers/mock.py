@@ -58,67 +58,91 @@ def _format_mock_response(user_message: str, system_hint: str) -> str:
 
     plan_steps: dict[str, list[str]] = {
         "code": [
-            "Inspect the relevant files in the workspace.",
-            "Sketch the change at the function level.",
-            "Apply the change and run the test suite.",
-            "Summarise the diff for the user.",
+            "Изучить релевантные файлы в рабочем пространстве.",
+            "Набросать изменение на уровне функций.",
+            "Применить изменение и запустить тесты.",
+            "Кратко описать диф для пользователя.",
         ],
         "research": [
-            "Identify the core question and sub-questions.",
-            "Pull authoritative sources via the web tool.",
-            "Cross-check at least two independent sources.",
-            "Synthesise findings into a structured brief.",
+            "Сформулировать главный вопрос и подвопросы.",
+            "Подтянуть авторитетные источники через web-инструмент.",
+            "Сверить минимум два независимых источника.",
+            "Свести находки в структурированный бриф.",
         ],
         "design": [
-            "Clarify the user persona and primary task.",
-            "Sketch the information architecture.",
-            "Propose component-level interactions.",
-            "Provide a Tailwind-friendly visual spec.",
+            "Уточнить целевого пользователя и его задачу.",
+            "Набросать информационную архитектуру.",
+            "Предложить взаимодействия на уровне компонентов.",
+            "Дать визуальную спецификацию под Tailwind.",
         ],
         "business": [
-            "Frame the problem and target market.",
-            "Estimate market size and key competitors.",
-            "Outline the value proposition and moat.",
-            "Draft a go-to-market and pricing model.",
+            "Сформулировать проблему и целевой рынок.",
+            "Оценить размер рынка и ключевых конкурентов.",
+            "Прописать ценностное предложение и моат.",
+            "Набросать модель выхода на рынок и ценообразование.",
         ],
         "general": [
-            "Restate the goal in concrete terms.",
-            "Break it into 2-4 atomic sub-tasks.",
-            "Execute each sub-task and verify.",
-            "Compose a structured final answer.",
+            "Переформулировать цель в конкретных терминах.",
+            "Разбить её на 2–4 атомарные подзадачи.",
+            "Выполнить каждую подзадачу и проверить.",
+            "Собрать структурированный финальный ответ.",
         ],
     }
+    intent_labels: dict[str, str] = {
+        "code": "код",
+        "research": "исследование",
+        "design": "дизайн",
+        "business": "бизнес",
+        "general": "общая задача",
+    }
     steps = plan_steps.get(intent, plan_steps["general"])
+    intent_label = intent_labels.get(intent, intent_labels["general"])
 
     plan_block = "\n".join(f"  {i+1}. {s}" for i, s in enumerate(steps))
     return (
-        f"[mock:{seed}] Manus Core received your request"
-        + (f" with system context \"{_truncate(system_hint, 80)}\"" if system_hint else "")
+        f"[mock:{seed}] Manus Core принял ваш запрос"
+        + (f" с системным контекстом «{_truncate(system_hint, 80)}»" if system_hint else "")
         + ".\n\n"
-        + "Reasoning (chain-of-thought, abbreviated):\n"
-        + f"  • intent → {intent}\n"
-        + f"  • input length → {len(user_message)} chars\n"
-        + f"  • selected playbook → {intent}-playbook\n\n"
-        + "Plan:\n"
+        + "Рассуждение (chain-of-thought, кратко):\n"
+        + f"  • интент → {intent_label}\n"
+        + f"  • длина ввода → {len(user_message)} символов\n"
+        + f"  • выбранный плейбук → {intent}-playbook\n\n"
+        + "План:\n"
         + plan_block
-        + "\n\nDraft answer:\n"
+        + "\n\nЧерновой ответ:\n"
         + _draft_answer(user_message, intent)
         + "\n\n"
-        + "(This deterministic answer comes from the Mock provider. Add an "
-        + "ANTHROPIC_API_KEY / OPENAI_API_KEY / GOOGLE_API_KEY in backend/.env "
-        + "to switch on a real model.)"
+        + "(Это детерминированный ответ от Mock-провайдера. Добавьте "
+        + "ANTHROPIC_API_KEY / OPENAI_API_KEY / GOOGLE_API_KEY в backend/.env, "
+        + "чтобы переключиться на реальную модель.)"
     )
 
 
 def _classify_intent(text: str) -> str:
     t = text.lower()
-    if any(k in t for k in ("code", "bug", "stack trace", "function", "class ", "typescript", "python")):
+    code_kw = (
+        "code", "bug", "stack trace", "function", "class ", "typescript", "python",
+        "код", "баг", "ошибк", "функци", "класс", "тайпскрипт", "питон", "патч",
+    )
+    research_kw = (
+        "research", "find", "compare", "competitor", "paper", "article",
+        "исследов", "найди", "найти", "сравни", "конкурент", "статья", "источник",
+    )
+    design_kw = (
+        "design", "ui", "ux", "figma", "layout", "component",
+        "дизайн", "интерфейс", "макет", "компонент",
+    )
+    business_kw = (
+        "startup", "market", "business", "investor", "pitch", "revenue",
+        "стартап", "рынок", "бизнес", "инвестор", "питч", "выручк",
+    )
+    if any(k in t for k in code_kw):
         return "code"
-    if any(k in t for k in ("research", "find", "compare", "competitor", "paper", "article")):
+    if any(k in t for k in research_kw):
         return "research"
-    if any(k in t for k in ("design", "ui", "ux", "figma", "layout", "component")):
+    if any(k in t for k in design_kw):
         return "design"
-    if any(k in t for k in ("startup", "market", "business", "investor", "pitch", "revenue")):
+    if any(k in t for k in business_kw):
         return "business"
     return "general"
 
@@ -127,31 +151,32 @@ def _draft_answer(user_message: str, intent: str) -> str:
     short = _truncate(user_message, 220)
     if intent == "code":
         return (
-            f"For the request \"{short}\" the recommended approach is to add a small,"
-            " self-contained module with explicit types, an integration test, and a"
-            " short docstring describing the contract."
+            f"Для запроса «{short}» рекомендуемый подход — добавить небольшой,"
+            " самодостаточный модуль с явными типами, интеграционным тестом и"
+            " коротким docstring, описывающим контракт."
         )
     if intent == "research":
         return (
-            f"Top-level findings on \"{short}\": (i) the field is moving fast, expect"
-            " breaking changes; (ii) treat any single source as a hypothesis until"
-            " corroborated; (iii) prioritise primary sources and recent reviews."
+            f"Главные тезисы по «{short}»: (i) область быстро меняется, ожидайте"
+            " breaking-изменений; (ii) считайте любой одиночный источник гипотезой,"
+            " пока он не подтверждён; (iii) приоритет — первичные источники и"
+            " свежие обзоры."
         )
     if intent == "design":
         return (
-            f"For \"{short}\", optimise for legibility on first glance: a 12-column"
-            " grid, a single accent colour, and progressive disclosure for advanced"
-            " controls."
+            f"Для «{short}» оптимизируйте читаемость с первого взгляда: 12-колоночная"
+            " сетка, один акцентный цвет и прогрессивное раскрытие для продвинутых"
+            " контролов."
         )
     if intent == "business":
         return (
-            f"For \"{short}\", articulate the wedge in one sentence, validate with"
-            " 5-7 customer interviews, and price for the smallest viable cohort"
-            " before broadening."
+            f"Для «{short}» сформулируйте «клин» в одном предложении, проверьте его"
+            " на 5–7 интервью с клиентами и заложите цену под минимально жизнеспособную"
+            " когорту, прежде чем расширять рынок."
         )
     return (
-        f"Acknowledged: \"{short}\". Manus Core will execute the plan above and"
-        " stream intermediate results into the chat as each sub-task completes."
+        f"Принято: «{short}». Manus Core выполнит план выше и будет"
+        " транслировать промежуточные результаты в чат по мере выполнения подзадач."
     )
 
 

@@ -8,10 +8,10 @@ from .base import AgentResult, AgentTask, BaseAgent
 
 class ProductManagerAgent(BaseAgent):
     name = "pm"
-    role = "Product manager"
+    role = "Продакт-менеджер"
     description = (
-        "Translates fuzzy requests into clear requirements, user stories, and "
-        "phased roadmaps. Calls out unknowns before committing to a plan."
+        "Переводит размытые запросы в чёткие требования, user stories и "
+        "этапные roadmap-ы. Явно фиксирует неизвестные до фиксации плана."
     )
     capabilities = ["requirements", "roadmaps", "user-stories", "scoping"]
     task_kind = TaskKind.REASONING

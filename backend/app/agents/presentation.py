@@ -8,10 +8,10 @@ from .base import AgentResult, AgentTask, BaseAgent
 
 class PresentationAgent(BaseAgent):
     name = "presentation"
-    role = "Pitch deck specialist"
+    role = "Специалист по презентациям для инвесторов"
     description = (
-        "Builds investor-grade pitch decks: problem, market, solution, traction, "
-        "team, financials, ask. Keeps each slide to one idea."
+        "Собирает pitch deck инвесторского уровня: проблема, рынок, решение, трекшн, "
+        "команда, финансы, ask. Один слайд — одна мысль."
     )
     capabilities = ["pitch-deck", "narrative", "slide-content"]
     task_kind = TaskKind.CREATIVE

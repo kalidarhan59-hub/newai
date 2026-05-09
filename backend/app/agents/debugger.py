@@ -8,10 +8,10 @@ from .base import AgentResult, AgentTask, BaseAgent
 
 class DebuggerAgent(BaseAgent):
     name = "debugger"
-    role = "Production debugger"
+    role = "Инженер по отладке production-инцидентов"
     description = (
-        "Reads stack traces and logs, isolates the failing component, and "
-        "proposes the smallest possible fix plus a regression test."
+        "Читает stack trace и логи, локализует падающий компонент и предлагает "
+        "минимально возможный фикс и регресс-тест к нему."
     )
     capabilities = ["log-analysis", "stack-traces", "fix-proposals"]
     task_kind = TaskKind.CODING

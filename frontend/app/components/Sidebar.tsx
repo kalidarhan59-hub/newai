@@ -22,13 +22,13 @@ export type Panel =
   | "tools";
 
 const items: Array<{ id: Panel; label: string; icon: React.ReactNode }> = [
-  { id: "chat", label: "Chat", icon: <MessageSquare size={18} /> },
-  { id: "agents", label: "Agents", icon: <Bot size={18} /> },
-  { id: "files", label: "Files", icon: <FileText size={18} /> },
-  { id: "projects", label: "Projects", icon: <FolderKanban size={18} /> },
-  { id: "memory", label: "Memory", icon: <Brain size={18} /> },
-  { id: "tools", label: "Tools", icon: <Wrench size={18} /> },
-  { id: "terminal", label: "Terminal", icon: <Terminal size={18} /> },
+  { id: "chat", label: "Чат", icon: <MessageSquare size={18} /> },
+  { id: "agents", label: "Агенты", icon: <Bot size={18} /> },
+  { id: "files", label: "Файлы", icon: <FileText size={18} /> },
+  { id: "projects", label: "Проекты", icon: <FolderKanban size={18} /> },
+  { id: "memory", label: "Память", icon: <Brain size={18} /> },
+  { id: "tools", label: "Инструменты", icon: <Wrench size={18} /> },
+  { id: "terminal", label: "Терминал", icon: <Terminal size={18} /> },
 ];
 
 export function Sidebar({
@@ -47,7 +47,7 @@ export function Sidebar({
         </div>
         <div>
           <div className="text-sm font-semibold tracking-wide">Manus Core</div>
-          <div className="text-[11px] text-fg-subtle">AI operating system</div>
+          <div className="text-[11px] text-fg-subtle">AI-операционная система</div>
         </div>
       </div>
       <nav className="flex-1 p-2 space-y-1">
@@ -71,8 +71,10 @@ export function Sidebar({
           onClick={toggle}
           className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm hover:bg-bg-subtle text-fg-muted hover:text-fg"
         >
-          <span>Theme</span>
-          <span className="text-xs uppercase tracking-wider">{theme}</span>
+          <span>Тема</span>
+          <span className="text-xs uppercase tracking-wider">
+            {theme === "dark" ? "тёмная" : "светлая"}
+          </span>
         </button>
         <a
           href="https://github.com"

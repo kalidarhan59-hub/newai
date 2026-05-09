@@ -11,7 +11,7 @@ from .base import BaseTool
 
 class CodeExecTool(BaseTool):
     name = "code_exec"
-    description = "Execute a short Python snippet in a sandboxed subprocess (10s timeout)."
+    description = "Выполнить короткий Python-сниппет в изолированном процессе (таймаут 10 с)."
     schema = {
         "type": "object",
         "properties": {

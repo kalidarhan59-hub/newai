@@ -35,10 +35,10 @@ export function ProjectsPanel() {
     <div className="grid grid-cols-1 md:grid-cols-[1fr_360px] h-full">
       <div className="p-6 overflow-y-auto">
         <div className="text-xs uppercase tracking-wider text-fg-subtle mb-2">
-          projects ({projects.length})
+          проектов: {projects.length}
         </div>
         {projects.length === 0 && (
-          <p className="text-sm text-fg-subtle">No projects yet — create one on the right.</p>
+          <p className="text-sm text-fg-subtle">Проектов пока нет — создайте один справа.</p>
         )}
         <ul className="space-y-2">
           {projects.map((p) => (
@@ -59,18 +59,18 @@ export function ProjectsPanel() {
       </div>
       <aside className="border-l border-border p-5 space-y-3">
         <div className="text-xs uppercase tracking-wider text-fg-subtle">
-          new project
+          новый проект
         </div>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Project name"
+          placeholder="Название проекта"
           className="w-full bg-bg-elevated border border-border rounded-lg px-3 py-2 text-sm"
         />
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description (optional)"
+          placeholder="Описание (необязательно)"
           rows={3}
           className="w-full bg-bg-elevated border border-border rounded-lg px-3 py-2 text-sm"
         />
@@ -80,7 +80,7 @@ export function ProjectsPanel() {
           className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-accent text-white text-sm disabled:opacity-50 hover:opacity-90"
         >
           {busy ? <Loader2 size={14} className="animate-spin" /> : <FolderPlus size={14} />}
-          create
+          создать
         </button>
       </aside>
     </div>

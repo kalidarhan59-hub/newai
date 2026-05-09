@@ -16,10 +16,10 @@ class ReasoningResult:
 
 
 SELF_CHECK_PROMPT = (
-    "You are a precise critic. Read the answer below and reply with a "
-    "JSON object: {\"confidence\": <0..1>, \"critique\": <one sentence>}. "
-    "Be strict — penalise hallucinations, missing constraints, and "
-    "unsupported claims."
+    "Ты — строгий критик. Прочитай ответ ниже и верни JSON-объект "
+    "в формате: {\"confidence\": <0..1>, \"critique\": <одно предложение на русском>}. "
+    "Будь строг: штрафуй галлюцинации, пропущенные ограничения и "
+    "неподкреплённые утверждения."
 )
 
 
@@ -38,8 +38,8 @@ class ReasoningEngine:
         """Run a single self-critique pass over an existing answer."""
 
         critique_prompt = (
-            f"QUESTION:\n{question}\n\nANSWER:\n{answer}\n\n"
-            "Respond ONLY with the JSON object described."
+            f"ВОПРОС:\n{question}\n\nОТВЕТ:\n{answer}\n\n"
+            "Ответь ТОЛЬКО описанным JSON-объектом."
         )
         response = await self.router.complete(
             [
@@ -60,7 +60,7 @@ def _parse_critique(answer: str, raw: str) -> ReasoningResult:
     import re
 
     confidence = 0.6
-    critique = "Mock critique: structure looks consistent."
+    critique = "Критика mock-провайдера: структура выглядит согласованно."
 
     match = re.search(r"\{[^{}]*\}", raw)
     if match:

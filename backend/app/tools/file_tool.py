@@ -22,7 +22,7 @@ class _WorkspaceTool(BaseTool):
 
 class FileReadTool(_WorkspaceTool):
     name = "file_read"
-    description = "Read a file from the workspace by name."
+    description = "Прочитать файл из рабочего пространства по имени."
     schema = {
         "type": "object",
         "properties": {"name": {"type": "string"}},
@@ -39,7 +39,7 @@ class FileReadTool(_WorkspaceTool):
 
 class FileWriteTool(_WorkspaceTool):
     name = "file_write"
-    description = "Write a file to the workspace by name."
+    description = "Записать файл в рабочее пространство по имени."
     schema = {
         "type": "object",
         "properties": {
@@ -60,7 +60,7 @@ class FileWriteTool(_WorkspaceTool):
 
 class ParseFileTool(_WorkspaceTool):
     name = "parse_file"
-    description = "Parse a workspace file and return chunks + summary."
+    description = "Разобрать файл из рабочего пространства и вернуть чанки + выжимку."
     schema = {
         "type": "object",
         "properties": {"name": {"type": "string"}},

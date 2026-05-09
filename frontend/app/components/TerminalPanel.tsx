@@ -12,7 +12,7 @@ interface Entry {
 }
 
 export function TerminalPanel() {
-  const [command, setCommand] = useState("echo hello from manus core");
+  const [command, setCommand] = useState("echo привет от manus core");
   const [history, setHistory] = useState<Entry[]>([]);
   const [busy, setBusy] = useState(false);
 
@@ -50,9 +50,9 @@ export function TerminalPanel() {
     <div className="flex flex-col h-full">
       <div className="border-b border-border px-6 py-4 flex items-center gap-2">
         <TerminalIcon size={16} className="text-accent" />
-        <h2 className="text-base font-semibold">Sandboxed terminal</h2>
+        <h2 className="text-base font-semibold">Сандбокс-терминал</h2>
         <span className="text-xs text-fg-subtle">
-          allowed: echo, ls, cat, wc, head, tail, grep, find, pwd, date, uname,
+          разрешено: echo, ls, cat, wc, head, tail, grep, find, pwd, date, uname,
           whoami, python3, node
         </span>
       </div>
@@ -62,12 +62,12 @@ export function TerminalPanel() {
             <div className="text-fg-subtle">$ {h.command}</div>
             {h.stdout && <pre className="whitespace-pre-wrap text-fg">{h.stdout}</pre>}
             {h.stderr && <pre className="whitespace-pre-wrap text-red-400">{h.stderr}</pre>}
-            <div className="text-fg-subtle">exit {h.exitCode}</div>
+            <div className="text-fg-subtle">код выхода: {h.exitCode}</div>
           </div>
         ))}
         {history.length === 0 && (
           <div className="text-fg-subtle">
-            Run a command above. Output will appear here.
+            Введите команду выше — вывод появится здесь.
           </div>
         )}
       </div>
@@ -84,7 +84,7 @@ export function TerminalPanel() {
           disabled={busy}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-white text-sm disabled:opacity-50 hover:opacity-90"
         >
-          <Play size={14} /> run
+          <Play size={14} /> запустить
         </button>
       </div>
     </div>

@@ -38,9 +38,9 @@ export function StatusBar() {
           </span>
         ))
       ) : error ? (
-        <span className="text-red-400">backend unreachable: {error}</span>
+        <span className="text-red-400">бэкенд недоступен: {error}</span>
       ) : (
-        <span>connecting…</span>
+        <span>подключение…</span>
       )}
     </div>
   );

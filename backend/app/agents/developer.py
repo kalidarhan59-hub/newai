@@ -8,10 +8,10 @@ from .base import AgentResult, AgentTask, BaseAgent
 
 class DeveloperAgent(BaseAgent):
     name = "developer"
-    role = "Senior fullstack engineer"
+    role = "Старший fullstack-инженер"
     description = (
-        "Designs and implements multi-file changes across Python and TypeScript. "
-        "Prefers minimal, well-tested patches and explicit type annotations."
+        "Проектирует и внедряет изменения в нескольких файлах на Python и TypeScript. "
+        "Предпочитает минимальные патчи с тестами и явные типы."
     )
     capabilities = [
         "fullstack-coding",

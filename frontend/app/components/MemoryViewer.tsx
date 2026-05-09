@@ -4,7 +4,11 @@ import { Loader2, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api, type MemoryEntry } from "../../lib/api";
 
-const NAMESPACES = ["conversations", "files", "projects"];
+const NAMESPACES: Array<{ id: string; label: string }> = [
+  { id: "conversations", label: "разговоры" },
+  { id: "files", label: "файлы" },
+  { id: "projects", label: "проекты" },
+];
 
 export function MemoryViewer() {
   const [namespace, setNamespace] = useState("conversations");
@@ -46,8 +50,8 @@ export function MemoryViewer() {
           className="bg-bg-elevated border border-border rounded-lg px-3 py-2 text-sm"
         >
           {NAMESPACES.map((n) => (
-            <option key={n} value={n}>
-              {n}
+            <option key={n.id} value={n.id}>
+              {n.label}
             </option>
           ))}
         </select>
@@ -57,7 +61,7 @@ export function MemoryViewer() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && search()}
-            placeholder="Semantic search across memory…"
+            placeholder="Семантический поиск по памяти…"
             className="flex-1 bg-transparent py-2 text-sm focus:outline-none"
           />
         </div>
@@ -65,17 +69,17 @@ export function MemoryViewer() {
           onClick={search}
           className="px-3 py-2 rounded-lg bg-accent text-white text-sm hover:opacity-90"
         >
-          search
+          найти
         </button>
       </div>
       <div className="flex-1 overflow-y-auto p-6 space-y-2">
         {busy && (
           <div className="flex items-center gap-2 text-fg-subtle text-sm">
-            <Loader2 size={14} className="animate-spin" /> loading…
+            <Loader2 size={14} className="animate-spin" /> загрузка…
           </div>
         )}
         {!busy && items.length === 0 && (
-          <p className="text-sm text-fg-subtle">No entries in this namespace yet.</p>
+          <p className="text-sm text-fg-subtle">В этом пространстве имён ещё нет записей.</p>
         )}
         {items.map((item) => (
           <div
@@ -84,7 +88,7 @@ export function MemoryViewer() {
           >
             <div className="text-[11px] uppercase tracking-wider text-fg-subtle flex justify-between">
               <span>{item.id}</span>
-              {item.score > 0 && <span>score {item.score.toFixed(2)}</span>}
+              {item.score > 0 && <span>релевантность {item.score.toFixed(2)}</span>}
             </div>
             <div className="mt-1 whitespace-pre-wrap line-clamp-6">{item.text}</div>
             {Object.keys(item.metadata).length > 0 && (

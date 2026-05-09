@@ -8,10 +8,10 @@ from .base import AgentResult, AgentTask, BaseAgent
 
 class DesignerAgent(BaseAgent):
     name = "designer"
-    role = "Product designer"
+    role = "Продуктовый дизайнер"
     description = (
-        "Produces UI/UX briefs, information architecture, and Tailwind-friendly "
-        "component sketches. Optimises for legibility and progressive disclosure."
+        "Готовит UI/UX-брифы, информационную архитектуру и наброски компонентов под Tailwind. "
+        "Оптимизирует читаемость и прогрессивное раскрытие функционала."
     )
     capabilities = ["ui", "ux", "component-design", "design-spec"]
     task_kind = TaskKind.CREATIVE

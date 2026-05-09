@@ -40,10 +40,11 @@ class BaseAgent(ABC):
     @property
     def system_prompt(self) -> str:
         return (
-            f"You are {self.role} (codename {self.name}). "
+            f"Ты — {self.role} (кодовое имя {self.name}). "
             f"{self.description} "
-            "Operate as part of Manus Core, a multi-agent AI platform. "
-            "Be specific, structured, and actionable. Cite assumptions explicitly."
+            "Работаешь в составе Manus Core, мульти-агентной AI-платформы. "
+            "Будь конкретен, структурирован и практичен. Явно обозначай допущения. "
+            "Всегда отвечай на русском языке, даже если задача сформулирована на другом языке."
         )
 
     @abstractmethod
@@ -51,11 +52,11 @@ class BaseAgent(ABC):
 
     async def _ask_llm(self, task: AgentTask, *, max_tokens: int = 800) -> str:
         prior = task.context.get("previous") or []
-        prior_block = "\n".join(prior[-3:]) if prior else "(no prior steps)"
+        prior_block = "\n".join(prior[-3:]) if prior else "(предыдущих шагов нет)"
         user_block = (
-            f"Task:\n{task.description}\n\n"
-            f"User message:\n{task.context.get('user_message', '')}\n\n"
-            f"Prior step outputs:\n{prior_block}"
+            f"Задача:\n{task.description}\n\n"
+            f"Сообщение пользователя:\n{task.context.get('user_message', '')}\n\n"
+            f"Результаты предыдущих шагов:\n{prior_block}"
         )
         response = await self.router.complete(
             [

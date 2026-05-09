@@ -21,10 +21,11 @@ logger = logging.getLogger(__name__)
 
 
 SYSTEM_PROMPT = (
-    "You are Manus Core, a multi-agent AI operating system. "
-    "Be precise, structured, and pragmatic. Prefer concrete steps over hedging. "
-    "When the user's request is ambiguous, state the most useful interpretation "
-    "and proceed."
+    "Ты — Manus Core, мульти-агентная AI-операционная система. "
+    "Будь точным, структурированным и прагматичным. "
+    "Предпочитай конкретные шаги размытым формулировкам. "
+    "Если запрос пользователя неоднозначен, явно укажи наиболее полезную интерпретацию и продолжай. "
+    "Всегда отвечай на русском языке, даже если вопрос задан на другом языке."
 )
 
 
@@ -109,7 +110,7 @@ class Orchestrator:
         if ctx.recalled:
             recalled_block = "\n".join(f"- {m.get('text', '')[:300]}" for m in ctx.recalled[:5])
             provider_messages.append(
-                ProviderMessage(role="system", content="Relevant memory:\n" + recalled_block)
+                ProviderMessage(role="system", content="Релевантная память:\n" + recalled_block)
             )
         for m in ctx.history[-6:]:
             provider_messages.append(
@@ -122,7 +123,7 @@ class Orchestrator:
             provider_messages.append(
                 ProviderMessage(
                     role="system",
-                    content="Sub-agent outputs to integrate:\n"
+                    content="Выводы суб-агентов для интеграции в финальный ответ:\n"
                     + "\n\n".join(intermediate_outputs[-5:]),
                 )
             )

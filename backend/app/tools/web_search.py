@@ -11,7 +11,7 @@ from .base import BaseTool
 
 class WebSearchTool(BaseTool):
     name = "web_search"
-    description = "Run a web search and return the top results."
+    description = "Выполнить веб-поиск и вернуть топ-результаты."
     schema = {
         "type": "object",
         "properties": {
