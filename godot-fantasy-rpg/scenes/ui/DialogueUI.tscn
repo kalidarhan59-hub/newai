@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://dialogue_ui"]
+
+[ext_resource type="Script" path="res://scripts/ui/DialogueUI.gd" id="1"]
+
+[node name="DialogueUI" type="CanvasLayer"]
+layer = 11
+script = ExtResource("1")
+
+[node name="Panel" type="Panel" parent="."]
+unique_name_in_owner = true
+offset_left = 140.0
+offset_top = 530.0
+offset_right = 1140.0
+offset_bottom = 700.0
+visible = false
+
+[node name="NameLabel" type="Label" parent="Panel"]
+unique_name_in_owner = true
+offset_left = 15.0
+offset_top = 8.0
+offset_right = 300.0
+offset_bottom = 28.0
+text = "НПС"
+
+[node name="TextLabel" type="Label" parent="Panel"]
+unique_name_in_owner = true
+offset_left = 15.0
+offset_top = 35.0
+offset_right = 985.0
+offset_bottom = 130.0
+text = "Текст диалога..."
+autowrap_mode = 2
+
+[node name="ContinueLabel" type="Label" parent="Panel"]
+unique_name_in_owner = true
+offset_left = 700.0
+offset_top = 140.0
+offset_right = 985.0
+offset_bottom = 160.0
+text = "[E] Далее..."
+horizontal_alignment = 2
