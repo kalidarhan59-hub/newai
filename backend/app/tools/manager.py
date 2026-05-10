@@ -9,6 +9,7 @@ from ..schemas import ToolCallResult, ToolInfo
 from .base import BaseTool
 from .code_exec import CodeExecTool
 from .file_tool import FileReadTool, FileWriteTool, ParseFileTool
+from .music_producer import MusicProducerTool
 from .terminal import TerminalTool
 from .web_search import WebSearchTool
 
@@ -47,4 +48,5 @@ def build_default_tools(settings: Settings) -> ToolManager:
     manager.register(FileReadTool(root=settings.upload_dir))
     manager.register(FileWriteTool(root=settings.upload_dir))
     manager.register(ParseFileTool(root=settings.upload_dir))
+    manager.register(MusicProducerTool())
     return manager
