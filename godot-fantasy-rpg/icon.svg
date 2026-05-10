@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
+  <rect width="128" height="128" rx="16" fill="#1a1a2e"/>
+  <text x="64" y="72" text-anchor="middle" font-size="48" font-family="sans-serif" fill="#e94560">FQ</text>
+  <text x="64" y="100" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#eee">Fantasy Quest</text>
+</svg>

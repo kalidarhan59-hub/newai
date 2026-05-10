@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/items/ItemDrop.gd" id="1"]
+
+[node name="ItemDrop" type="Area2D" groups=["items"]]
+collision_layer = 16
+collision_mask = 1
+script = ExtResource("1")
