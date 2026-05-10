@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://castle_level"]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/levels/LevelGenerator.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://player_scene" path="res://scenes/player/Player.tscn" id="2"]
-[ext_resource type="PackedScene" uid="uid://hud_scene" path="res://scenes/ui/HUD.tscn" id="3"]
-[ext_resource type="PackedScene" uid="uid://dialogue_ui" path="res://scenes/ui/DialogueUI.tscn" id="4"]
-[ext_resource type="PackedScene" uid="uid://shop_ui" path="res://scenes/ui/ShopUI.tscn" id="5"]
-[ext_resource type="PackedScene" uid="uid://death_screen" path="res://scenes/ui/DeathScreen.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/ui/DialogueUI.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ShopUI.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/ui/DeathScreen.tscn" id="6"]
 
 [node name="Castle" type="Node2D"]
 script = ExtResource("1")

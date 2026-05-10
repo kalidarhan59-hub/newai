@@ -107,7 +107,9 @@ func _check_phase() -> void:
 	for i in phases.size():
 		var phase = phases[i]
 		var hp_percent = float(hp) / float(max_hp)
-		if hp_percent <= phase.hp_percent and not phase_announced[i] if i < phase_announced.size() else false:
+		if i >= phase_announced.size():
+			continue
+		if hp_percent <= phase.hp_percent and not phase_announced[i]:
 			current_phase = i
 			phase_announced[i] = true
 			speed = phase.get("speed", speed)
@@ -205,6 +207,17 @@ func _aoe_attack(radius: float, dmg: int) -> void:
 	await get_tree().create_timer(0.5).timeout
 	if is_instance_valid(aoe_visual):
 		aoe_visual.queue_free()
+
+func _ranged_strike() -> void:
+	# Быстрый дальний удар (лоза, теневой удар)
+	if target == null:
+		return
+	var proj = preload("res://scenes/weapons/EnemyProjectile.tscn").instantiate()
+	proj.global_position = global_position
+	proj.direction = (target.global_position - global_position).normalized()
+	proj.damage = int(damage * 1.2)
+	proj.speed_val = 250.0
+	get_parent().add_child(proj)
 
 func _breath_attack() -> void:
 	# Конус перед боссом
